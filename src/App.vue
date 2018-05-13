@@ -14,10 +14,9 @@
     </ul>
   </div>
 </template>
-
+ 
 <script>
 import Store from './store.js'
-import HelloWorld from './components/HelloWorld'
 export default {
   data: function(){
     return{

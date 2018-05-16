@@ -1,26 +1,26 @@
 <template>
   <div id="app">
-    <h2>todo list</h2>
+    <h2 >A Vue.js Demo - To Do List</h2>
+    <h2 class='c1'>by wantingtr</h2>
     <input id='add-input' v-model='newItem' @keyup.enter='addNew' placeholder="do what?">
     <ul>
-      <li v-for='item in items'>
+      <li v-for='(item,index) in items'>
         <h3 @mouseenter='itemEnter(item)' @mouseleave='itemLeave(item)'>
-          <input type="checkbox" @click='itemCheck(item)'>
-          <p class="item-label" :class="{'line-through':!item.checked}">{{ $index + 1}} . {{ item.label }}</p>
-          <p class="item-status" v-if='!item.checked'>finished</p>
-          <p class="item-delete" v-if='item.showDelete' @click='deleteClick(item)'>delete</p>
+          <p class="item-label" :class="{'line-through':item.checked}">{{ index+1 }} . {{ item.label }}</p>
+          <label class='item-status' v-if='!item.checked' @click='item.checked=true'>Finished</label>
+          <p class="item-delete" v-if='item.showDelete' @click='deleteClick(index)'>delete</p>
         </h3>
       </li>
     </ul>
+    <button class='delete-button' type="button" name="deleteall" @click='deleteall()'>Delete all</button>
   </div>
 </template>
- 
+
 <script>
 import Store from './store.js'
 export default {
   data: function(){
     return{
-      title:'it is a todolist',
       items:Store.fetch(),
       newItem:''
     }
@@ -33,10 +33,6 @@ export default {
         showDelete:true
       })
       this.newItem=''
-      Store.save()
-    },
-    itemCheck(item){
-      item.checked=!item.checked
     },
     itemEnter(item){
       item.showDelete = true
@@ -44,8 +40,11 @@ export default {
     itemLeave(item){
       item.showDelete = false
     },
-    deleteClick(item){
-      this.items.$remove(item)
+    deleteClick(index){
+      this.items.splice(index, 1)
+    },
+    deleteall(){
+      this.items = [];
     }
   },
   watch:{
@@ -53,7 +52,7 @@ export default {
       handler:function(items){
         Store.save(items)
       },
-      deep:true
+      deep: true
     }
   }
 }
@@ -64,21 +63,17 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  text-align: center;
+}
+.c1{
+  font-size: 15px;
 }
 .add-input{
   width: 750px;
   height:35px;
   paading: 0 5px;
-}
-ul{
-  list-style: none;
-  padding: 0;
-}
-li{
-  height: 30px;
 }
 .item-status{
   display: inline;
@@ -86,6 +81,10 @@ li{
   color:white;
   padding : 0 5px;
   cursor: pointer;
+}
+ul{
+  margin: 0px;
+  padding: 0px;
 }
 .item-delete{
   display: inline;
@@ -99,5 +98,8 @@ li{
 }
 .line-through{
   text-decoration: line-through;
+}
+.delete-button{
+  margin:20px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h2 >A Vue.js Demo - To Do List</h2>
-    <h2 class='c1'>by wantingtr</h2>
+    <h2 style="font-size: 15px">by wantingtr</h2>
     <input id='add-input' v-model='newItem' @keyup.enter='addNew' placeholder="do what?">
     <ul>
       <li v-for='(item,index) in items'>
@@ -67,9 +67,7 @@ export default {
   margin-top: 60px;
   text-align: center;
 }
-.c1{
-  font-size: 15px;
-}
+
 .add-input{
   width: 750px;
   height:35px;
